@@ -5,19 +5,22 @@ from datetime import datetime
 
 #TODO - setup a system where a setting files is made for the project and is used by the make script
 
+
 #==================== DIRECTORIES ====================#
 proj_root = ''
 library_dir_name = 'lib'
 binary_dir_name = 'bin'
+testing_dir_name = 'tbin'
 source_dir_name = 'src'
-files = [library_dir_name, binary_dir_name, source_dir_name]
+files = [library_dir_name, binary_dir_name, testing_dir_name, source_dir_name]
 
 #==================== HANDLE ARGUMENT ====================#
 main_ext = ''
-compiler = ''
+compiler_str = ''
+script_name = "pForge"
 
 def usage():
-    usageMsg = 'usage: python papbuilder.py [option] ...[-l language]\nOptions:'
+    usageMsg = 'usage: python ' + script_name + '.py [option] ...[-l language]\nOptions:'
     options = ['-l', '-h','-n']
     option_desc = ['defines the main programming language used for the project', 'prints out this message']
     print(usageMsg)
@@ -36,22 +39,22 @@ for x in sys.argv:
             if language.lower() == 'c':
 
                 main_ext = '.c'
-                compiler = 'gcc -o ' + binary_dir_name+'/templateBIN' + ' -g -Wall' + source_dir_name + '/' #add later the main file
+                compiler_str = 'gcc -o ' + binary_dir_name+'/templateBIN' + ' -g -Wall' + source_dir_name + '/' #add later the main file
 
             elif language.lower() == 'cpp':
 
                 main_ext = '.cpp'
-                compiler = 'gcc' #to be completed
+                compiler_str = 'g++' #to be completed
             
             elif language.lower() == 'java':
             
                 main_ext = '.java'
-                compiler = 'java'
+                compiler_str = 'java'
             
             elif language.lower() == 'cs':
             
                 main_ext = '.cs'
-                compiler = 'dotnet build' #to be completed
+                compiler_str = 'dotnet build' #to be completed
             
             elif language.lower() == 'py':
             
@@ -79,7 +82,7 @@ else:
     make_ext = '.sh'
 
 readme_path = './README.txt'
-template_main = 'src/Main'+main_ext
+template_main = source_dir_name+'/Main'+main_ext
 makefile = 'make'+make_ext
 
 
@@ -88,4 +91,4 @@ readme_content = 'static initial :: To be removed :: '+datetime.today().strftime
 
 makefile_content = ''
 if make_ext == '.ps1':
-    makefile_content = compiler+''
+    makefile_content = compiler_str+''
