@@ -1,9 +1,11 @@
 import sys
+import os
 from datetime import datetime
 
 #==================== LOAD VARIABLES ====================#
 
 #TODO - setup a system where a setting files is made for the project and is used by the make script
+cust_lib = []#TODO -  figure out how to add to array
 
 
 #==================== DIRECTORIES ====================#
@@ -17,16 +19,16 @@ files = [library_dir_name, binary_dir_name, testing_dir_name, source_dir_name]
 #==================== HANDLE ARGUMENT ====================#
 main_ext = ''
 compiler_str = ''
-script_name = "pForge"
+script_name = sys.argv[0]
 
 def usage():
-    usageMsg = 'usage: python ' + script_name + '.py [option] ...[-l language]\nOptions:'
+    usageMsg = 'usage: python ' + script_name + ' [option] ...[-l language]\nOptions:'
     options = ['-l', '-h','-n']
-    option_desc = ['defines the main programming language used for the project', 'prints out this message']
+    option_desc = ['defines the main programming language used for the project', 'prints out this message', 'defines the project name']
     print(usageMsg)
     for o in options:
         print('\t',o,' ',option_desc[options.index(o)])
-        
+    exit()
 
 for x in sys.argv:
     if '-' in x:
@@ -63,7 +65,7 @@ for x in sys.argv:
             
             else:
             
-                print('Unknown language...')
+                print('Unknown option...')
         
         elif x == '-n':
             proj_root = sys.argv[sys.argv.index(x)+1]
@@ -87,8 +89,19 @@ makefile = 'make'+make_ext
 
 
 #==================== FILE-CONTENTS ====================#
-readme_content = 'static initial :: To be removed :: '+datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+readme_content = 'static initial :: To be removed :: '+datetime.today().strftime('%Y-%m-%d %H:%M:%S')#deprecated
+readme_template = "TODO"
+with open(readme_template, "r") as f:
+    readme_content = f.read()
 
 makefile_content = ''
 if make_ext == '.ps1':
-    makefile_content = compiler_str+''
+    makefile_content = compiler_str+''#TODO - Complete teh makefile content
+
+
+#==================== BUILDING-PROJECT ====================#
+def create_project():
+    os.mkdir(proj_root)
+    for file in files:
+        os.mkdir(proj_root+"/"+file)
+    

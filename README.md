@@ -44,6 +44,7 @@ For the moment there is no way to report any bugs or issue with the program.
 - (todo) Project building option for C#
 - (todo) Project building option for python
 - (todo) Project building option for Web projects
+- (todo) Project building feature without a specified language/template
 - (todo) Database project options *Highly likely to be dropped*
 
 ## Status  
